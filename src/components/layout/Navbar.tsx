@@ -49,7 +49,7 @@ export function Navbar() {
           >
             {nav.langSwitch}
           </Link>
-          <Button href="#demo" variant="secondary">
+          <Button href="/demo" variant="secondary">
             {nav.requestDemo}
           </Button>
         </div>

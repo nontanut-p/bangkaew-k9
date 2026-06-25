@@ -23,7 +23,7 @@ export function FinalCTA() {
               {cta.description}
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <Button href="mailto:demo@bangkaew-k9.dev">{cta.primary}</Button>
+              <Button href="/demo">{cta.primary}</Button>
               <Button href="#tech" variant="secondary">
                 {cta.secondary}
               </Button>

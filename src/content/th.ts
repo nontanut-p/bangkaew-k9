@@ -16,7 +16,7 @@ export const th: Content = {
       { href: "#features", label: "ฟีเจอร์" },
       { href: "#tech", label: "Tech Stack" },
     ],
-    requestDemo: "ขอ Demo",
+    requestDemo: "ไป Demo",
     langSwitch: "EN",
     langSwitchTarget: "en",
   },
@@ -28,7 +28,7 @@ export const th: Content = {
     description:
       "แพลตฟอร์ม Agentic Cybersecurity ที่ช่วยตรวจจับ วิเคราะห์ แนะนำการตอบโต้ และสร้างรายงานเหตุการณ์จาก Wazuh, Shuffle, Kali และ AI Agent ในหน้าเดียว",
     ctaPrimary: "ดูวิธีการทำงาน",
-    ctaSecondary: "ขอ Demo",
+    ctaSecondary: "ไป Demo",
     imageAlt: "บางแก้ว K9 — หมาเฝ้าระบบไซเบอร์อัจฉริยะ",
     alerts: [
       { title: "Brute Force Detected", severity: "high" },
@@ -549,7 +549,7 @@ export const th: Content = {
     title: "ให้บางแก้ว K9 เฝ้าบ้านดิจิทัลขององค์กรคุณ",
     description:
       "ตรวจจับเร็วขึ้น เข้าใจง่ายขึ้น ตอบสนองอย่างปลอดภัย และมี AI เป็นผู้ช่วยวิเคราะห์ทุกเหตุการณ์",
-    primary: "ขอ Demo",
+    primary: "ไป Demo",
     secondary: "ดู Architecture",
   },
   footer: {

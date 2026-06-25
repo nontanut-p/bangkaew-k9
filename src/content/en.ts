@@ -16,7 +16,7 @@ export const en: Content = {
       { href: "#features", label: "Features" },
       { href: "#tech", label: "Tech Stack" },
     ],
-    requestDemo: "Request Demo",
+    requestDemo: "Go to Demo",
     langSwitch: "TH",
     langSwitchTarget: "th",
   },
@@ -28,7 +28,7 @@ export const en: Content = {
     description:
       "An Agentic Cybersecurity platform that detects, analyzes, recommends responses, and generates incident reports from Wazuh, Shuffle, Kali, and AI Agents — all in one unified view.",
     ctaPrimary: "See How It Works",
-    ctaSecondary: "Request Demo",
+    ctaSecondary: "Go to Demo",
     imageAlt: "Bangkaew K9 — Intelligent cyber guard platform",
     alerts: [
       { title: "Brute Force Detected", severity: "high" },
@@ -562,7 +562,7 @@ export const en: Content = {
     title: "Let Bangkaew K9 guard your organization's digital home",
     description:
       "Detect faster, understand easier, respond safely — with AI analyzing every incident.",
-    primary: "Request Demo",
+    primary: "Go to Demo",
     secondary: "View Architecture",
   },
   footer: {

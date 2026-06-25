@@ -80,7 +80,7 @@ export function Hero() {
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Button href="#story">{hero.ctaPrimary}</Button>
-              <Button href="#demo" variant="secondary">
+              <Button href="/demo" variant="secondary">
                 {hero.ctaSecondary}
               </Button>
             </div>
