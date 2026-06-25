@@ -53,9 +53,11 @@ export function FindingsView() {
       <DemoBanner />
       <DemoPageHeader title="Findings" description="All code vulnerabilities from scans" actions={<DemoButton href="/demo/code/prs">View PRs</DemoButton>} />
       <DemoTable
-        columns={["Finding", "Severity", "File", "Tool", "CWE", "Status", "Auto Fix", "Owner"]}
+        columns={["Finding", "Severity", "File", "Tool", "OWASP", "CWE", "Status", "Auto Fix", "Owner"]}
         rows={findings.map((f) => [
-          f.title, <SeverityBadge key={f.id} severity={f.severity} />, `${f.file}:${f.line}`, f.tool, f.cwe,
+          f.title, <SeverityBadge key={f.id} severity={f.severity} />, `${f.file}:${f.line}`, f.tool,
+          <span key={f.id + "o"} className="font-mono text-[10px] text-orange-300/90">{f.owasp}</span>,
+          f.cwe,
           <StatusBadge key={f.id} status={f.status} />, f.autoFix ? "Yes" : "No", f.owner,
         ])}
       />

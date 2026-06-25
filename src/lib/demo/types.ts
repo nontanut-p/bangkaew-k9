@@ -89,6 +89,7 @@ export interface Finding {
   line: number;
   tool: string;
   cwe: string;
+  owasp: string;
   status: "Open" | "Fixed" | "False Positive" | "In Progress";
   autoFix: boolean;
   owner: string;

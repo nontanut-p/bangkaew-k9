@@ -453,7 +453,7 @@ export const th: Content = {
       { category: "SOAR", items: ["Shuffle"] },
       {
         category: "Code Security",
-        items: ["Semgrep", "Trivy", "Gitleaks", "GitHub"],
+        items: ["Semgrep", "Trivy", "Gitleaks", "OWASP Top 10", "GitHub"],
       },
       {
         category: "Attack Simulation",

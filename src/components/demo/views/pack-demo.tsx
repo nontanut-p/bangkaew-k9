@@ -27,19 +27,16 @@ import {
 } from "@/lib/demo/pack-agents";
 import { usePackAgentStatus, usePackDemo } from "@/lib/demo/pack-demo-store";
 import { packReports } from "@/lib/demo/pack-alerts";
+import { CollieShufflePanel } from "@/components/demo/CollieShufflePanel";
+import { RetrieverPanel } from "@/components/demo/RetrieverPanel";
 import { ShepherdWazuhPanel } from "@/components/demo/ShepherdWazuhPanel";
 import {
   alerts,
   executiveDashboard,
-  findings,
   incidentTimeline,
   incidents,
   integrations,
   mitreTactics,
-  playbookRuns,
-  playbooks,
-  pullRequests,
-  repositories,
 } from "@/lib/demo/mock-data";
 
 export function CommandCenterView() {
@@ -229,116 +226,8 @@ function BangkaewPanel() {
   );
 }
 
-function RetrieverPanel() {
-  const { retrieverJob } = usePackDemo();
-  const retrieverBusy =
-    retrieverJob?.phase === "assigned" || retrieverJob?.phase === "working";
-
-  return (
-    <div className="space-y-6">
-      <p className="text-sm text-slate-400">
-        Scans repositories with Semgrep, Trivy, and Gitleaks — opens fix pull requests automatically.
-      </p>
-
-      {retrieverJob && retrieverJob.phase !== "idle" && (
-        <div className="glass-card border-emerald-500/25 p-4">
-          <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-emerald-200">
-              {retrieverJob.phase === "done" ? "Completed" : "Current task"}
-            </p>
-            {retrieverJob.phase === "working" && (
-              <span className="font-mono text-xs text-emerald-400">{retrieverJob.progress}%</span>
-            )}
-          </div>
-          <p className="mt-1 text-sm text-white">
-            {retrieverJob.task.label} · {retrieverJob.task.repo}
-          </p>
-          <p className="text-xs text-slate-400">{retrieverJob.task.detail}</p>
-          {(retrieverJob.phase === "working" || retrieverJob.phase === "assigned") && (
-            <div className="mt-3 h-2 overflow-hidden rounded-full bg-navy-900">
-              <div
-                className="h-full rounded-full bg-emerald-500 transition-all duration-300"
-                style={{ width: `${Math.max(retrieverJob.progress, 5)}%` }}
-              />
-            </div>
-          )}
-          {retrieverJob.phase === "done" && (
-            <p className="mt-2 text-xs text-emerald-300">
-              {retrieverJob.task.resultTitle} — {retrieverJob.task.resultMessage}
-            </p>
-          )}
-        </div>
-      )}
-
-      {!retrieverBusy && (
-        <div className="glass-card border-cyan-500/20 p-4">
-          <p className="mb-3 text-sm text-slate-300">Retriever is idle — assign a task from Bangkaew</p>
-          <DemoButton href="/demo/pack/bangkaew">Go to Bangkaew chat</DemoButton>
-        </div>
-      )}
-
-      <DemoTable
-        columns={["Repo", "Stack", "Findings", "Open PRs"]}
-        rows={repositories.map((r) => [r.name, r.stack, r.openFindings, r.openPrs])}
-      />
-      <h3 className="text-sm font-semibold text-white">Top findings</h3>
-      <DemoTable
-        columns={["Finding", "Severity", "Auto Fix"]}
-        rows={findings.slice(0, 4).map((f) => [
-          f.title,
-          <SeverityBadge key={f.id} severity={f.severity} />,
-          f.autoFix ? "✓ Yes" : "—",
-        ])}
-      />
-      <h3 className="text-sm font-semibold text-white">Auto-fix PRs</h3>
-      <DemoTable
-        columns={["PR", "Repo", "Status", "CI"]}
-        rows={pullRequests.map((p) => [
-          p.title,
-          p.repo,
-          <StatusBadge key={p.id} status={p.status} />,
-          p.ciStatus,
-        ])}
-      />
-    </div>
-  );
-}
-
 function ColliePanel() {
-  return (
-    <div className="space-y-6">
-      <p className="text-sm text-slate-400">
-        Runs Shuffle playbooks — block IP, isolate host, notify, and open tickets.
-      </p>
-      <div className="glass-card border-violet-500/20 p-4">
-        <p className="text-sm text-violet-200">
-          2 actions pending approval —{" "}
-          <Link href="/demo/pack/bangkaew" className="font-semibold text-cyan-400 hover:underline">
-            Block IP
-          </Link>{" "}
-          and{" "}
-          <Link href="/demo/pack/bangkaew" className="font-semibold text-cyan-400 hover:underline">
-            Isolate host
-          </Link>
-        </p>
-      </div>
-      <h3 className="text-sm font-semibold text-white">Playbook catalog</h3>
-      <DemoTable
-        columns={["Playbook", "Impact", "Approval?"]}
-        rows={playbooks.map((p) => [p.name, p.impact, p.approvalRequired ? "Required" : "Auto"])}
-      />
-      <h3 className="text-sm font-semibold text-white">Recent runs</h3>
-      <DemoTable
-        columns={["Playbook", "Incident", "Status", "Result"]}
-        rows={playbookRuns.map((r) => [
-          r.playbook,
-          r.incident,
-          <StatusBadge key={r.id} status={r.status} />,
-          r.result,
-        ])}
-      />
-    </div>
-  );
+  return <CollieShufflePanel />;
 }
 
 function PitbullPanel() {

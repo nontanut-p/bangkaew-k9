@@ -48,7 +48,7 @@ export const packAgents: PackAgent[] = [
     id: "retriever",
     name: "Retriever",
     role: "Fixer",
-    tool: "GitHub + Semgrep / Trivy",
+    tool: "GitHub + Semgrep / Trivy / OWASP",
     image: "/pack/retriever.png",
     color: "from-emerald-500 to-green-500",
     borderColor: "border-emerald-500/40",
@@ -105,7 +105,7 @@ export const packAgentStatus: Record<PackAgentId, PackAgentStatus> = {
   collie: {
     state: "working",
     label: "Working",
-    task: "Playbooks armed — standing by",
+    task: "Playbooks armed — approval gate via Bangkaew",
     statusColor: "text-violet-400",
   },
   pitbull: {

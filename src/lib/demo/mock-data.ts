@@ -68,11 +68,11 @@ export const repositories: Repository[] = [
 ];
 
 export const findings: Finding[] = [
-  { id: "F-101", title: "SQL Injection risk in login handler", severity: "critical", file: "src/auth/login.ts", line: 42, tool: "Semgrep", cwe: "CWE-89", status: "Open", autoFix: true, owner: "dev-team" },
-  { id: "F-102", title: "Hardcoded API key detected", severity: "high", file: "config/prod.env.example", line: 8, tool: "Gitleaks", cwe: "CWE-798", status: "In Progress", autoFix: true, owner: "security" },
-  { id: "F-103", title: "Outdated dependency: lodash@4.17.15", severity: "high", file: "package-lock.json", line: 0, tool: "Trivy", cwe: "CVE-2020-8203", status: "Open", autoFix: true, owner: "dev-team" },
-  { id: "F-104", title: "Missing rate limit on /api/login", severity: "medium", file: "src/routes/auth.ts", line: 15, tool: "Semgrep", cwe: "CWE-770", status: "Open", autoFix: true, owner: "dev-team" },
-  { id: "F-105", title: "Dockerfile runs as root", severity: "medium", file: "Dockerfile", line: 12, tool: "Trivy", cwe: "CIS-4.1", status: "Fixed", autoFix: true, owner: "devops" },
+  { id: "F-101", title: "SQL Injection risk in login handler", severity: "critical", file: "src/auth/login.ts", line: 42, tool: "Semgrep", cwe: "CWE-89", owasp: "A03 Injection", status: "Open", autoFix: true, owner: "dev-team" },
+  { id: "F-102", title: "Hardcoded API key detected", severity: "high", file: "config/prod.env.example", line: 8, tool: "Gitleaks", cwe: "CWE-798", owasp: "A02 Cryptographic Failures", status: "In Progress", autoFix: true, owner: "security" },
+  { id: "F-103", title: "Outdated dependency: lodash@4.17.15", severity: "high", file: "package-lock.json", line: 0, tool: "Trivy", cwe: "CVE-2020-8203", owasp: "A06 Vulnerable Components", status: "Open", autoFix: true, owner: "dev-team" },
+  { id: "F-104", title: "Missing rate limit on /api/login", severity: "medium", file: "src/routes/auth.ts", line: 15, tool: "Semgrep", cwe: "CWE-770", owasp: "A07 Auth Failures", status: "Open", autoFix: true, owner: "dev-team" },
+  { id: "F-105", title: "Dockerfile runs as root", severity: "medium", file: "Dockerfile", line: 12, tool: "Trivy", cwe: "CIS-4.1", owasp: "A05 Misconfiguration", status: "Fixed", autoFix: true, owner: "devops" },
 ];
 
 export const pullRequests: PullRequest[] = [
