@@ -1,6 +1,16 @@
-# บางแก้ว K9
+# Bangkaew K9
 
-Agentic Cybersecurity Guard Platform — หมาเฝ้าระบบไซเบอร์อัจฉริยะสำหรับองค์กรยุค AI
+Agentic Cybersecurity Guard Platform — Intelligent cyber guard for the AI-powered enterprise.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnontanut-p%2Fbangkaew-k9&project-name=bangkaew-k9&framework=nextjs&root-directory=.)
+
+## Deploy to Vercel (one click)
+
+1. Click **Deploy with Vercel** above (or open [import on Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnontanut-p%2Fbangkaew-k9&project-name=bangkaew-k9&framework=nextjs))
+2. Sign in with GitHub if prompted
+3. Click **Deploy** — no environment variables needed
+
+Live repo: [github.com/nontanut-p/bangkaew-k9](https://github.com/nontanut-p/bangkaew-k9)
 
 ## Getting Started
 
