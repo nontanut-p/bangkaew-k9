@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { BangkaewCommanderPanel } from "@/components/demo/BangkaewCommanderPanel";
 import { PackAgentCard } from "@/components/demo/PackAgentCard";
 import { PackAlertFeed, PackReportPipeline } from "@/components/demo/PackAgentAlertPopups";
@@ -28,6 +29,7 @@ import {
 import { usePackAgentStatus, usePackDemo } from "@/lib/demo/pack-demo-store";
 import { packReports } from "@/lib/demo/pack-alerts";
 import { CollieShufflePanel } from "@/components/demo/CollieShufflePanel";
+import { PitbullAttackPanel } from "@/components/demo/PitbullAttackPanel";
 import { RetrieverPanel } from "@/components/demo/RetrieverPanel";
 import { ShepherdWazuhPanel } from "@/components/demo/ShepherdWazuhPanel";
 import {
@@ -36,7 +38,6 @@ import {
   incidentTimeline,
   incidents,
   integrations,
-  mitreTactics,
 } from "@/lib/demo/mock-data";
 
 export function CommandCenterView() {
@@ -207,19 +208,45 @@ function ShepherdPanel() {
 }
 
 function BangkaewPanel() {
+  const [liveIncidents, setLiveIncidents] = useState<
+    { id: number; title: string; severity: string; status: string; summary_exec?: string }[]
+  >([]);
+
+  useEffect(() => {
+    fetch("/api/incidents")
+      .then((r) => r.json())
+      .then((d) => setLiveIncidents(d.incidents ?? []));
+  }, []);
+
+  const rows = liveIncidents.length
+    ? liveIncidents
+    : incidents.map((i) => ({
+        id: i.id,
+        title: i.title,
+        severity: i.severity,
+        status: i.status,
+        summary_exec: i.pendingAction,
+      }));
+
   return (
     <div className="space-y-6">
       <BangkaewCommanderPanel />
       <h3 className="text-sm font-semibold text-white">Active incidents</h3>
       <DemoTable
-        columns={["Incident", "Severity", "Status", "Pending"]}
-        rows={incidents.map((i) => [
-          <Link key={i.id} href={`/demo/incident/${i.id}`} className="text-cyan-400 hover:underline">
-            {i.title}
-          </Link>,
-          <SeverityBadge key={i.id + "s"} severity={i.severity} />,
-          <StatusBadge key={i.id + "st"} status={i.status} />,
-          i.pendingAction,
+        columns={["Incident", "Severity", "Status", "Summary"]}
+        rows={rows.map((i) => [
+          typeof i.id === "number" ? (
+            <span key={i.id} className="text-cyan-400">
+              {i.title}
+            </span>
+          ) : (
+            <Link key={String(i.id)} href={`/demo/incident/${i.id}`} className="text-cyan-400 hover:underline">
+              {i.title}
+            </Link>
+          ),
+          <SeverityBadge key={String(i.id) + "s"} severity={i.severity as "critical"} />,
+          <StatusBadge key={String(i.id) + "st"} status={i.status} />,
+          "summary_exec" in i ? (i.summary_exec ?? "—") : "—",
         ])}
       />
     </div>
@@ -231,48 +258,7 @@ function ColliePanel() {
 }
 
 function PitbullPanel() {
-  const covered = mitreTactics.reduce((s, t) => s + t.covered, 0);
-  const total = mitreTactics.reduce((s, t) => s + t.total, 0);
-  return (
-    <div className="space-y-6">
-      <div className="glass-card border-red-500/30 p-4">
-        <p className="text-sm font-medium text-red-300">Unavailable — Caldera not connected</p>
-        <p className="mt-1 text-xs text-slate-400">
-          Connect Caldera/Kali in Setup to run attack simulations.
-        </p>
-        <DemoButton href="/demo/setup" variant="secondary">
-          Connect Caldera in Setup
-        </DemoButton>
-      </div>
-      <p className="text-sm text-slate-400">
-        Runs safe attack simulations via Kali/Caldera — measures detection and response speed.
-      </p>
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="glass-card p-4 text-center">
-          <p className="text-2xl font-bold text-emerald-400">94%</p>
-          <p className="text-xs text-slate-500">Detection rate</p>
-        </div>
-        <div className="glass-card p-4 text-center">
-          <p className="text-2xl font-bold text-cyan-400">12s</p>
-          <p className="text-xs text-slate-500">Avg detection time</p>
-        </div>
-        <div className="glass-card p-4 text-center">
-          <p className="text-2xl font-bold text-amber-400">{Math.round((covered / total) * 100)}%</p>
-          <p className="text-xs text-slate-500">MITRE coverage</p>
-        </div>
-      </div>
-      <DemoButton>Run safe simulation: Brute force</DemoButton>
-      <h3 className="text-sm font-semibold text-white">MITRE ATT&CK coverage</h3>
-      <div className="grid gap-2 sm:grid-cols-2">
-        {mitreTactics.slice(0, 6).map((t) => (
-          <div key={t.tactic} className="glass-card flex items-center justify-between px-3 py-2 text-sm">
-            <span className="text-slate-300">{t.tactic}</span>
-            <span className="text-cyan-400">{t.covered}/{t.total}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  return <PitbullAttackPanel />;
 }
 
 export function IncidentStoryView({ id }: { id: string }) {

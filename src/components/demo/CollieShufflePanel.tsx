@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   collieActionCatalog,
   collieBangkaewReports,
@@ -424,6 +424,45 @@ export function CollieShufflePanel() {
       )}
 
       <DisabledModulesStrip />
+
+      <CollieLiveActionsLog />
+    </div>
+  );
+}
+
+function CollieLiveActionsLog() {
+  const [actions, setActions] = useState<
+    { id: number; playbook_id: string; target: string; status: string; trigger_source: string; created_at: string }[]
+  >([]);
+
+  useEffect(() => {
+    fetch("/api/collie/actions")
+      .then((r) => r.json())
+      .then((d) => setActions(d.actions ?? []));
+    const es = new EventSource("/api/stream");
+    es.addEventListener("collie_action", () => {
+      fetch("/api/collie/actions")
+        .then((r) => r.json())
+        .then((d) => setActions(d.actions ?? []));
+    });
+    return () => es.close();
+  }, []);
+
+  if (actions.length === 0) return null;
+
+  return (
+    <div>
+      <h3 className="mb-3 text-sm font-semibold text-white">Recent automation log (live)</h3>
+      <DemoTable
+        columns={["Time", "Trigger", "Playbook", "Target", "Status"]}
+        rows={actions.slice(0, 10).map((a) => [
+          new Date(a.created_at).toLocaleTimeString("en-GB"),
+          a.trigger_source,
+          a.playbook_id.replace(/_/g, " "),
+          a.target,
+          a.status === "success" ? "✅ Success" : a.status === "pending" ? "⏳ Pending" : a.status,
+        ])}
+      />
     </div>
   );
 }

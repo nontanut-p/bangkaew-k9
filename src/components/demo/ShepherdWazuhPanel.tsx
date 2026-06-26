@@ -16,6 +16,7 @@ import {
 } from "@/lib/demo/shepherd-wazuh";
 import { alerts, endpoints } from "@/lib/demo/mock-data";
 import { usePackDemo } from "@/lib/demo/pack-demo-store";
+import { WazuhLiveDashboard } from "@/components/demo/WazuhLiveDashboard";
 import { DemoTable, SeverityBadge, StatusBadge } from "@/components/demo/ui";
 import { cn } from "@/lib/demo/cn";
 
@@ -249,6 +250,7 @@ function DisabledModulesStrip() {
 
 export function ShepherdWazuhPanel() {
   const [tab, setTab] = useState<WazuhTab>("Overview");
+  const [liveMode, setLiveMode] = useState(false);
 
   const moduleTabs = useMemo(
     () =>
@@ -264,11 +266,39 @@ export function ShepherdWazuhPanel() {
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-slate-400">
-        Wazuh platform — {shepherdMonitorSummary.modulesActive} of {shepherdMonitorSummary.modulesTotal}{" "}
-        modules active. Monitoring summary and reports flow to Bangkaew.
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="text-sm text-slate-400">
+          Wazuh platform — {shepherdMonitorSummary.modulesActive} of {shepherdMonitorSummary.modulesTotal}{" "}
+          modules active. Monitoring summary and reports flow to Bangkaew.
+        </p>
+        <div className="flex gap-1.5">
+          <button
+            type="button"
+            onClick={() => setLiveMode(false)}
+            className={cn(
+              "rounded-lg px-3 py-1.5 text-xs font-medium",
+              !liveMode ? "bg-cyan-500/20 text-cyan-300" : "text-slate-400 hover:bg-white/5"
+            )}
+          >
+            Modules
+          </button>
+          <button
+            type="button"
+            onClick={() => setLiveMode(true)}
+            className={cn(
+              "rounded-lg px-3 py-1.5 text-xs font-medium",
+              liveMode ? "bg-blue-500/20 text-blue-300" : "text-slate-400 hover:bg-white/5"
+            )}
+          >
+            Live SIEM
+          </button>
+        </div>
+      </div>
 
+      {liveMode ? (
+        <WazuhLiveDashboard />
+      ) : (
+        <>
       {/* Category tabs */}
       <div className="flex flex-wrap gap-1.5">
         {wazuhCategories.map((cat) => (
@@ -333,6 +363,8 @@ export function ShepherdWazuhPanel() {
       {!activeModule && tab !== "Overview" && <CategoryPanel category={tab} />}
 
       <DisabledModulesStrip />
+        </>
+      )}
     </div>
   );
 }

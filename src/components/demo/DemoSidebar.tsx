@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { AlarmToggle } from "@/components/demo/AlarmToggle";
 import { packAgents, packAgentStateMeta, type PackAgent } from "@/lib/demo/pack-agents";
 import { usePackAgentStatus } from "@/lib/demo/pack-demo-store";
 import { PackAgentAvatar } from "@/components/demo/PackAgentStatus";
@@ -43,7 +44,13 @@ function SidebarAgentItem({
 
 export function DemoSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+
+  async function logout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    router.push("/login");
+  }
 
   const isHome = pathname === "/demo";
   const activeAgent = packAgents.find((a) => pathname.startsWith(a.href));
@@ -116,7 +123,10 @@ export function DemoSidebar() {
             ))}
           </ul>
 
-          <div className="mt-6 border-t border-white/5 pt-4">
+          <div className="mt-6 border-t border-white/5 pt-4 space-y-2">
+            <div className="px-3">
+              <AlarmToggle />
+            </div>
             <Link
               href="/demo/setup"
               onClick={close}
@@ -127,6 +137,16 @@ export function DemoSidebar() {
             >
               ⚙️ Setup & integrations
             </Link>
+            <button
+              type="button"
+              onClick={() => {
+                close();
+                logout();
+              }}
+              className="block w-full rounded-lg px-3 py-2 text-left text-xs text-slate-500 hover:text-slate-300"
+            >
+              Log out
+            </button>
           </div>
         </nav>
       </aside>
